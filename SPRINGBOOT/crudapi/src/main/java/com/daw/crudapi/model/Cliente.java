@@ -4,6 +4,7 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -48,6 +49,21 @@ public class Cliente {
         direcciones.add(direccion);
         // Le decimos que la direccion pertenece a este cliente
         direccion.setCliente(this);
+    }
+
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+    private List<Pedido> pedidos;
+
+    /**
+     * Funcion para añadir correctamente un pedido a este cliente
+     * 
+     * @param pedido
+     */
+    public void addPedido(Pedido pedido) {
+        // Añadimos el pedido a la lista de pedidos del cliente
+        pedidos.add(pedido);
+        // Le decimos que el pedido pertenece a este cliente
+        pedido.setCliente(this);
     }
 
 }
