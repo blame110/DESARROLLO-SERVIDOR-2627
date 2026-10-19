@@ -22,7 +22,6 @@ import lombok.ToString;
 @Setter
 @ToString
 @AllArgsConstructor
-
 public class Pedido {
 
     @Id
@@ -34,14 +33,16 @@ public class Pedido {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private EstadoPedido estado = EstadoPedido.RECIBIDO;
+    private EstadoPedido estado;
 
     // Forzamos a que cargue la direccion cuando carga el pedido
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "direccion_id", nullable = false)
     private Direccion direccion;
 
     // Forzamos a que cargue el cliente cuando carga el pedido
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;

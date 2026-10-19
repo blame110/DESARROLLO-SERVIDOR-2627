@@ -1,5 +1,6 @@
 package com.daw.crudapi.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -13,6 +14,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -20,7 +22,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
+@NoArgsConstructor
 @Table(indexes = @Index(name = "idx_email", columnList = "email"))
 public class Cliente {
     @Id
@@ -41,18 +43,21 @@ public class Cliente {
 
     // En mappedBy va el nombre del campo de la otra entidad
     // Que sirve para mapear esta
+    @ToString.Exclude
     @OneToMany(mappedBy = "cliente")
-    private List<Direccion> direcciones;
+    private List<Direccion> direcciones = new ArrayList<>();
 
     public void addDireccion(Direccion direccion) {
-        // Añadimos la direccion a la lista de direcciones del cliente
-        direcciones.add(direccion);
         // Le decimos que la direccion pertenece a este cliente
         direccion.setCliente(this);
+        // Añadimos la direccion a la lista de direcciones del cliente
+        direcciones.add(direccion);
+
     }
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
-    private List<Pedido> pedidos;
+    private List<Pedido> pedidos = new ArrayList<>();
 
     /**
      * Funcion para añadir correctamente un pedido a este cliente

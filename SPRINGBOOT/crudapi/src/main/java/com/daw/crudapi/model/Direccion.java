@@ -9,6 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -17,6 +18,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class Direccion {
 
     @Id
@@ -42,6 +44,7 @@ public class Direccion {
     // id de la tabla cliente porque usamos la clase Cliente
     // Ponemos nullable false ya que no puede haber direcciones sin clientes
     // asignado
+    @ToString.Exclude
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
